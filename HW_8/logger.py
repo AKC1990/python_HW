@@ -121,6 +121,7 @@ def put_data():
                 file.write(i)
 
 
+
 def delete_data():
     file_num = int(input(f'Укажите в каком файле Вы хотите удалить запись:\n'
                         f'1 - 1 файл\n'
