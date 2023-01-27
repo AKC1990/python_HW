@@ -29,32 +29,111 @@ def input_data():
     print('Успешно!!')
 
 
-def print_data():
-    print('1 файл: ')
-    with open('data_first_variant.csv', 'r', encoding = 'utf-8') as file:
-        data_first = file.readlines()
-        data_first_second = []
-        j = 0
-        for i in range(len(data_first)):
-            if data_first[i] == '\n' or i == len(data_first) - 1:
-                data_first_second.append(''.join(data_first[j:i]))
-                j = i
-        data_first = data_first_second
-        print(''.join(data_first))
-
-    print('2 файл: ')
+def print_data(file_number = None):
+    
+    if file_number is None or file_number == 1:
+        print('1 файл:')
+        with open('data_first_variant.csv', 'r', encoding = 'utf-8') as file:
+            data_first = file.readlines()
+            data_first_second = []
+            j = 0
+            num = 1
+            for i in range(len(data_first)):
+                if data_first[i] == '\n' or i == len(data_first) - 1:
+                    data_first_second.extend([f"\n{num}.\n", ''.join(data_first[j:i]).strip(), '\n'])
+                    j = i
+                    num += 1
+            data_first = data_first_second
+            print(''.join(data_first))
+    
+    print('2 файл:\n')
     with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
         data_second = list(file.readlines())
-
-        print(*data_second)
+        num = 1
+        for i in data_second:
+            if i != '\n':
+                i = i.strip()
+                print(f'{num}. {i}')
+                num += 1
+        print(type(data_second))
     
     return data_first, data_second
 
 
 def put_data():
-    data_first, data_second = print_data()
+    print_data()
+    file_num = int(input(f'Укажите какой файл Вы хотите изменить:\n'
+                        f'1 - 1 файл\n'
+                        f'2 - 2 файл\n'))
+    
+    if file_num != 1 and file_num != 2:
+        file_num = int(input(f'Укажите какой файл Вы хотите изменить:\n'
+                        f'1 - 1 файл\n'
+                        f'2 - 2 файл\n'))
 
-    data_first = data_first[:n] + [f'{name}\n{surname}\n{phone}\n{adress}\n'] + data_first[n+1:]
+    if file_num == 1:
+        with open('data_first_variant.csv', 'r', encoding = 'utf-8') as file:
+            dir_num = int(input('\nУкажите номер записи, которую Вы хотите изменить: '))
+            book = file.readlines()
+            new_book = []
+            counter = 1
+            i = 0
+            while i < len(book):
+                if counter != dir_num:
+                    if book[i] != '\n':
+                        new_book.append(f'{book[i]}')
+                        i += 1
+                    else:
+                        new_book.append('\n')
+                        counter += 1
+                        i += 1
+                else:
+                    new_book.extend([name_data() + '\n', surname_data() + '\n', phone_data() + '\n', adress_data() + '\n', '\n'])
+                    counter += 1
+                    i += 5
+
+        with open('data_first_variant.csv', 'w', encoding = 'utf-8') as file:
+            for i in new_book:
+                file.write(i)
+    
+    if file_num == 2:
+        with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
+            dir_num = int(input('\nУкажите номер записи, которую Вы хотите изменить: '))
+            book = file.readlines()
+            print(book)
+            new_book = []
+            counter = 1
+            i = 0
+            while i < len(book):
+                if counter != dir_num:
+                    if book[i] != '\n':
+                        new_book.append(f'{book[i]}')
+                        i += 1
+                    else:
+                        new_book.append('\n')
+                        counter += 1
+                        i += 1
+                else:
+                    new_book.append(f'{name_data()};{surname_data()};{phone_data()};{adress_data()}\n')
+                    counter += 1
+                    i += 1
+        
+        with open('data_second_variant.csv', 'w', encoding = 'utf-8') as file:
+            for i in new_book:
+                file.write(i)
+
+                    
+
+
+                    
+
+
+
+
+
+    # data_first, data_second = print_data()
+
+    # data_first = data_first[:n] + [f'{name}\n{surname}\n{phone}\n{adress}\n'] + data_first[n+1:]
 
 
 def delete_data():
