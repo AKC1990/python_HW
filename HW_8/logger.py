@@ -46,22 +46,22 @@ def print_data(file_number = None):
             data_first = data_first_second
             print(''.join(data_first))
     
-    print('2 файл:\n')
-    with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
-        data_second = list(file.readlines())
-        num = 1
-        for i in data_second:
-            if i != '\n':
-                i = i.strip()
-                print(f'{num}. {i}')
-                num += 1
-        print(type(data_second))
-    
-    return data_first, data_second
+    if file_number is None or file_number == 2:
+        print('2 файл:\n')
+        with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
+            data_second = list(file.readlines())
+            num = 1
+            for i in data_second:
+                if i != '\n':
+                    i = i.strip()
+                    print(f'{num}. {i}')
+                    num += 1
+            print(type(data_second))
+        
+        # return data_first, data_second
 
 
 def put_data():
-    print_data()
     file_num = int(input(f'Укажите какой файл Вы хотите изменить:\n'
                         f'1 - 1 файл\n'
                         f'2 - 2 файл\n'))
@@ -72,6 +72,7 @@ def put_data():
                         f'2 - 2 файл\n'))
 
     if file_num == 1:
+        print_data(1)
         with open('data_first_variant.csv', 'r', encoding = 'utf-8') as file:
             dir_num = int(input('\nУкажите номер записи, которую Вы хотите изменить: '))
             book = file.readlines()
@@ -97,6 +98,7 @@ def put_data():
                 file.write(i)
     
     if file_num == 2:
+        print_data(2)
         with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
             dir_num = int(input('\nУкажите номер записи, которую Вы хотите изменить: '))
             book = file.readlines()
