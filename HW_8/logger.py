@@ -55,10 +55,7 @@ def print_data(file_number = None):
                 if i != '\n':
                     i = i.strip()
                     print(f'{num}. {i}')
-                    num += 1
-            print(type(data_second))
-        
-        # return data_first, data_second
+                    num += 1       
 
 
 def put_data():
@@ -102,7 +99,6 @@ def put_data():
         with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
             dir_num = int(input('\nУкажите номер записи, которую Вы хотите изменить: '))
             book = file.readlines()
-            print(book)
             new_book = []
             counter = 1
             i = 0
@@ -124,19 +120,68 @@ def put_data():
             for i in new_book:
                 file.write(i)
 
-                    
-
-
-                    
-
-
-
-
-
-    # data_first, data_second = print_data()
-
-    # data_first = data_first[:n] + [f'{name}\n{surname}\n{phone}\n{adress}\n'] + data_first[n+1:]
-
 
 def delete_data():
-    pass
+    file_num = int(input(f'Укажите в каком файле Вы хотите удалить запись:\n'
+                        f'1 - 1 файл\n'
+                        f'2 - 2 файл\n'))
+    
+    if file_num != 1 and file_num != 2:
+        file_num = int(input(f'Укажите в каком файле Вы хотите удалить запись:\n'
+                        f'1 - 1 файл\n'
+                        f'2 - 2 файл\n'))
+
+    if file_num == 1:
+        print_data(1)
+        with open('data_first_variant.csv', 'r', encoding = 'utf-8') as file:
+            dir_num = int(input('\nУкажите номер записи, которую Вы хотите удалить: '))
+            book = file.readlines()
+            new_book = []
+            counter = 1
+            i = 0
+            while i < len(book):
+                if counter != dir_num:
+                    if book[i] != '\n':
+                        new_book.append(f'{book[i]}')
+                        i += 1
+                    else:
+                        new_book.append('\n')
+                        counter += 1
+                        i += 1
+                else:
+                    counter += 1
+                    i += 5
+                
+        with open('data_first_variant.csv', 'w', encoding = 'utf-8') as file:
+            for i in new_book:
+                file.write(i)
+
+    if file_num == 2:
+        print_data(2)
+        with open('data_second_variant.csv', 'r', encoding = 'utf-8') as file:
+            dir_num = int(input('\nУкажите номер записи, которую Вы хотите удалить: '))
+            book = file.readlines()
+            new_book = []
+            counter = 1
+            i = 0
+            while i < len(book):
+                if counter != dir_num:
+                    if book[i] != '\n':
+                        new_book.append(f'{book[i]}')
+                        i += 1
+                    else:
+                        new_book.append('\n')
+                        counter += 1
+                        i += 1
+                else:
+                    counter += 1
+                    i += 2
+            
+        with open('data_second_variant.csv', 'w', encoding = 'utf-8') as file:
+            for i in new_book:
+                file.write(i)
+
+
+    
+
+    
